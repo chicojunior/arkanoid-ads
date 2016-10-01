@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
         Thread gameThread = null;
         SurfaceHolder surfaceHolder;
         Paddle paddle;
+        Ball ball;
 
 
         public Arkanoid(Context context) {
@@ -52,7 +53,9 @@ public class MainActivity extends Activity {
             screenX = size.x;
             screenY = size.y;
             paddle = new Paddle(screenX, screenY);
+            ball = new Ball(screenX, screenY);
         }
+        
 
         @Override
         public void run() {
@@ -74,15 +77,26 @@ public class MainActivity extends Activity {
 
         public void update() {
             paddle.update(fps);
+            ball.update(fps);
         }
 
         public void draw() {
 
             if (surfaceHolder.getSurface().isValid()) {
                 canvas = surfaceHolder.lockCanvas();
+
+                //cor do fundo
                 canvas.drawColor(Color.argb(255,  238, 36, 54));
+
+                //cor do paddle
                 paint.setColor(Color.argb(255,  255, 255, 255));
+
                 canvas.drawRect(paddle.getRect(), paint);
+
+                //cor da bola
+                paint.setColor(Color.argb(255,  0, 0, 0));
+                canvas.drawRect(ball.getRect(), paint);
+
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
 
