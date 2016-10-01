@@ -148,10 +148,18 @@ public class MainActivity extends Activity {
                 ball.clearObstacleX(2);
             }
 
+            if (paddle.getRect().left < 0) {
+                paddle.clearObstacleX(2);
+            }
+
             // right wall
             if (ball.getRect().right > screenX - 10) {
                 ball.reverseXVelocity();
                 ball.clearObstacleX(screenX - 22);
+            }
+
+            if (paddle.getRect().right > screenX - 10) {
+                paddle.clearObstacleX(screenX - 130);
             }
             //==================================================
 

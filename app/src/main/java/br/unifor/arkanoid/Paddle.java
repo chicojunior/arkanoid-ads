@@ -59,4 +59,14 @@ public class Paddle {
         rect.right = x + length;
     }
 
+//    public void clearObstacleY(float y) {
+//        rect.bottom = y;
+//        rect.top = y - height;
+//    }
+
+    public void clearObstacleX(float x) {
+        rect.left = x;
+        rect.right = x + length;
+    }
+
 }
