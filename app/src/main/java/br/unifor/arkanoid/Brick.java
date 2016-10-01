@@ -12,29 +12,29 @@ public class Brick {
 
     private boolean isVisible;
 
-    public Brick(int row, int column, int width, int height){
+    public Brick(int row, int column, int width, int height) {
 
         isVisible = true;
 
         int padding = 3;
 
         rect = new RectF(
-            column * width + padding,
-            row * height + padding,
-            column * width + width - padding,
-            row * height + height - padding
+                column * width + padding,
+                row * height + padding,
+                column * width + width - padding,
+                row * height + height - padding
         );
     }
 
-    public RectF getRect(){
+    public RectF getRect() {
         return this.rect;
     }
 
-    public void setInvisible(){
+    public void setInvisible() {
         isVisible = false;
     }
 
-    public boolean getVisibility(){
+    public boolean getVisibility() {
         return isVisible;
     }
 }

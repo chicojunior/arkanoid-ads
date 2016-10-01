@@ -36,22 +36,22 @@ public class Paddle {
     }
 
 
-    public RectF getRect(){
+    public RectF getRect() {
         return rect;
     }
 
 
-    public void setMovementState(int state){
+    public void setMovementState(int state) {
         paddleMoving = state;
     }
 
 
-    public void update(long fps){
-        if(paddleMoving == LEFT){
+    public void update(long fps) {
+        if (paddleMoving == LEFT) {
             x = x - paddleSpeed / fps;
         }
 
-        if(paddleMoving == RIGHT){
+        if (paddleMoving == RIGHT) {
             x = x + paddleSpeed / fps;
         }
 

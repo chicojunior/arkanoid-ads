@@ -25,7 +25,7 @@ public class Ball {
         rect = new RectF();
     }
 
-    public RectF getRect(){
+    public RectF getRect() {
         return rect;
     }
 
