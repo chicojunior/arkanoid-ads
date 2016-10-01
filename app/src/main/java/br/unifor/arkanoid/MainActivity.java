@@ -5,9 +5,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,23 +28,30 @@ public class MainActivity extends Activity {
 
     class Arkanoid extends SurfaceView implements Runnable {
 
-        //primitivos
-        boolean playing;
+        volatile boolean playing;
         boolean paused = true;
+        int screenX;
+        int screenY;
         long fps;
         private long timeThisFrame;
 
-        //objetos
-        Thread gameThread = null;
         Canvas canvas;
         Paint paint;
+        Thread gameThread = null;
         SurfaceHolder surfaceHolder;
+        Paddle paddle;
 
 
         public Arkanoid(Context context) {
             super(context);
             surfaceHolder = getHolder();
             paint = new Paint();
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            screenX = size.x;
+            screenY = size.y;
+            paddle = new Paddle(screenX, screenY);
         }
 
         @Override
@@ -64,15 +73,16 @@ public class MainActivity extends Activity {
         }
 
         public void update() {
-
+            paddle.update(fps);
         }
 
         public void draw() {
 
             if (surfaceHolder.getSurface().isValid()) {
                 canvas = surfaceHolder.lockCanvas();
-                canvas.drawColor(Color.argb(1,  255, 255, 255));
-                paint.setColor(Color.argb(1,  255, 255, 255));
+                canvas.drawColor(Color.argb(255,  238, 36, 54));
+                paint.setColor(Color.argb(255,  255, 255, 255));
+                canvas.drawRect(paddle.getRect(), paint);
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
 
@@ -97,9 +107,21 @@ public class MainActivity extends Activity {
         public boolean onTouchEvent(MotionEvent motionEvent) {
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
+                    paused = false;
+
+                    Log.d("Log", "action_down: tela clicada");
+
+                    if (motionEvent.getX() > screenX / 2) {
+                        paddle.setMovementState(paddle.RIGHT);
+                    } else {
+                        paddle.setMovementState(paddle.LEFT);
+                    }
+
                     break;
 
                 case MotionEvent.ACTION_UP:
+                    Log.d("Log", "action_up: clique concluído");
+                    paddle.setMovementState(paddle.STOPPED);
                     break;
 
             }
